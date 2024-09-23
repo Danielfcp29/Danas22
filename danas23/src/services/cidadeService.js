@@ -1,6 +1,6 @@
-const urlBase = 'http://localhost:3000'; // Altere este URL caso o backend esteja rodando em outro host ou porta
+const urlBase = 'http://localhost:3000';
 
-// Funções para Cidades
+
 export const fetchCidades = async () => {
     const response = await fetch(`${urlBase}/cidade`);
     return response.json();

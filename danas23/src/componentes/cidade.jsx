@@ -6,10 +6,10 @@ function Cidade() {
   const [cidades, setCidades] = useState([]);
   const [paises, setPaises] = useState([]);
   const [nome, setNome] = useState('');
-  const [codigoPais, setCodigoPais] = useState('');  // Agora é um campo de texto
+  const [codigoPais, setCodigoPais] = useState('');  
   const [codigoEdit, setCodigoEdit] = useState(null);
 
-  // Carregar as cidades e os países ao montar o componente
+  
   useEffect(() => {
     carregarCidades();
     carregarPaises();
@@ -30,7 +30,7 @@ function Cidade() {
       await criarCidade(nome, codigoPais);
       setNome('');
       setCodigoPais('');
-      carregarCidades();  // Atualiza a lista de cidades
+      carregarCidades(); 
     } else {
       alert('Por favor, preencha o nome da cidade e o código do país');
     }
@@ -42,7 +42,7 @@ function Cidade() {
       setCodigoEdit(null);
       setNome('');
       setCodigoPais('');
-      carregarCidades();  // Atualiza a lista de cidades
+      carregarCidades();  
     } else {
       alert('Por favor, preencha todos os campos antes de atualizar');
     }
@@ -51,24 +51,24 @@ function Cidade() {
   const handleExcluir = async (codigo) => {
     if (window.confirm('Tem certeza que deseja excluir esta cidade?')) {
       await excluirCidade(codigo);
-      carregarCidades();  // Atualiza a lista de cidades
+      carregarCidades();  
     }
   };
 
   const handleEditar = (cidade) => {
     setCodigoEdit(cidade.codigo);
     setNome(cidade.nome);
-    setCodigoPais(cidade.codigoPais);  // Preenche o campo de texto com o código do país atual
+    setCodigoPais(cidade.codigoPais); 
   };
 
-  // Função para obter o nome do país pelo código
+  
   const obterNomePais = (codigoPais) => {
     if (!codigoPais || paises.length === 0) {
-      return 'Desconhecido'; // Retorna 'Desconhecido' se não houver código ou países carregados
+      return 'Desconhecido'; 
     }
 
     const pais = paises.find((p) => parseInt(p.codigo) === parseInt(codigoPais));
-    return pais ? pais.nome : 'Desconhecido';  // Se encontrar o país, retorna o nome; senão, retorna 'Desconhecido'
+    return pais ? pais.nome : 'Desconhecido';  
   };
 
   return (
@@ -78,7 +78,7 @@ function Cidade() {
           <tr>
             <th>ID</th>
             <th>Nome da Cidade</th>
-            <th>País</th> {/* Alterado para mostrar o nome do país */}
+            <th>País</th> 
             <th>Ações</th>
           </tr>
         </thead>
@@ -87,7 +87,7 @@ function Cidade() {
             <tr key={cidade.codigo}>
               <td>{cidade.codigo}</td>
               <td>{cidade.nome}</td>
-              <td>{obterNomePais(cidade.codigoPais)}</td>  {/* Exibindo o nome do país */}
+              <td>{obterNomePais(cidade.codigoPais)}</td>  
               <td>
                 <button className="btn btn-warning btn-sm me-2" onClick={() => handleEditar(cidade)}>Editar</button>
                 <button className="btn btn-danger btn-sm" onClick={() => handleExcluir(cidade.codigo)}>Excluir</button>
@@ -108,7 +108,7 @@ function Cidade() {
           type="text" 
           className="form-control"
           placeholder="Código do País"
-          value={codigoPais}  // Campo de texto para inserir o código do país
+          value={codigoPais}  
           onChange={(e) => setCodigoPais(e.target.value)}
         />
         <button 

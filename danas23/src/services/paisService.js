@@ -1,8 +1,11 @@
-const urlBase = 'http://localhost:3000'; // Altere este URL caso o backend esteja rodando em outro host ou porta
+const urlBase = 'http://localhost:3000'; 
 
-// Funções para Países
+
 export const fetchPaises = async () => {
     const response = await fetch(`${urlBase}/pais`);
+    if (!response.ok) {
+        throw new Error('Erro ao buscar países');
+    }
     return response.json();
 };
 
@@ -14,6 +17,9 @@ export const criarPais = async (nome) => {
         },
         body: JSON.stringify({ nome }),
     });
+    if (!response.ok) {
+        throw new Error('Erro ao criar país');
+    }
     return response.json();
 };
 
@@ -25,6 +31,9 @@ export const atualizarPais = async (codigo, nome) => {
         },
         body: JSON.stringify({ codigo, nome }),
     });
+    if (!response.ok) {
+        throw new Error('Erro ao atualizar país');
+    }
     return response.json();
 };
 
@@ -36,5 +45,8 @@ export const excluirPais = async (codigo) => {
         },
         body: JSON.stringify({ codigo }),
     });
+    if (!response.ok) {
+        throw new Error('Erro ao excluir país');
+    }
     return response.json();
 };

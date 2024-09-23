@@ -6,23 +6,24 @@ function Pais() {
   const [nome, setNome] = useState('');
   const [codigoEdit, setCodigoEdit] = useState(null);
 
-  // Carregar os países ao montar o componente
   useEffect(() => {
     carregarPaises();
   }, []);
 
   const carregarPaises = async () => {
-    const data = await fetchPaises();
-    setPaises(data.listaPaises);  // Certifique-se de que a resposta do backend contém listaPaises
+    try {
+      const data = await fetchPaises();
+      setPaises(data.listaPaises);
+    } catch (error) {
+      console.error('Erro ao carregar países:', error);
+    }
   };
 
   const handleCriar = async () => {
     if (nome) {
       await criarPais(nome);
       setNome('');
-      carregarPaises();  // Atualiza a lista de países
-    } else {
-      alert('Por favor, preencha o nome do país');
+      carregarPaises();  
     }
   };
 
@@ -31,22 +32,20 @@ function Pais() {
       await atualizarPais(codigoEdit, nome);
       setCodigoEdit(null);
       setNome('');
-      carregarPaises();  // Atualiza a lista de países
-    } else {
-      alert('Por favor, preencha o nome do país');
+      carregarPaises();  
     }
   };
 
   const handleExcluir = async (codigo) => {
     if (window.confirm('Tem certeza que deseja excluir este país?')) {
       await excluirPais(codigo);
-      carregarPaises();  // Atualiza a lista de países
+      carregarPaises();  
     }
   };
 
   const handleEditar = (pais) => {
     setCodigoEdit(pais.codigo);
-    setNome(pais.nome);  // Preenche o campo de nome do país para edição
+    setNome(pais.nome);
   };
 
   return (
@@ -60,16 +59,22 @@ function Pais() {
           </tr>
         </thead>
         <tbody>
-          {paises.map((pais) => (
-            <tr key={pais.codigo}>
-              <td>{pais.codigo}</td>
-              <td>{pais.nome}</td>
-              <td>
-                <button className="btn btn-warning btn-sm me-2" onClick={() => handleEditar(pais)}>Editar</button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleExcluir(pais.codigo)}>Excluir</button>
-              </td>
+          {paises.length > 0 ? (
+            paises.map((pais) => (
+              <tr key={pais.codigo}>
+                <td>{pais.codigo}</td>
+                <td>{pais.nome}</td>
+                <td>
+                  <button className="btn btn-warning btn-sm me-2" onClick={() => handleEditar(pais)}>Editar</button>
+                  <button className="btn btn-danger btn-sm" onClick={() => handleExcluir(pais.codigo)}>Excluir</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="text-center">Nenhum país encontrado</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
       <div className="input-group mb-3">

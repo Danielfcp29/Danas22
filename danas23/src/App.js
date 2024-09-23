@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Pais from './componentes/pais';  // Certifique-se que o nome do arquivo é "pais.jsx"
-import Cidade from './componentes/cidade';  // Certifique-se que o nome do arquivo é "cidade.jsx"
+import Pais from './componentes/pais';  
+import Cidade from './componentes/cidade'; 
 
 function App() {
   return (
